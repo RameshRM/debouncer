@@ -1,15 +1,20 @@
 (function($win) {
     "use strict";
+    var lastResizeInterval = null;
+
+    var __isFunction = function(fnDef) {
+        return typeof fnDef === "function";
+    }
 
     $win.debouncer = function(callback) {
-        var __isFunction = typeof callback === "function";
+        var callbackIsFunction = __isFunction(callback);
 
-        if (window.lastResizeInterval != null) {
-            window.clearInterval(window.lastResizeInterval);
+        if (lastResizeInterval != null) {
+            window.clearInterval(lastResizeInterval);
         }
 
-        window.lastResizeInterval = window.setTimeout(function() {
-            if (__isFunction) {
+        lastResizeInterval = window.setTimeout(function() {
+            if (callbackIsFunction) {
                 callback();
             }
         }, 200);
